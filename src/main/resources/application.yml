@@ -1,0 +1,30 @@
+#server:
+#  port: 8080
+spring:
+  application:
+    name: mff-gateway-testing
+  cloud:
+    gateway:
+      routes:
+        - id: mdmWilayahModule
+          uri: lb://MDM-WILAYAH
+          predicates:
+            - Path=/mdm/wilayah/**
+        - id: uaaModule
+          uri: lb://MFF-UAA
+          predicates:
+            - Path=/uaa/**
+        - id: assetsModule
+          uri: lb://MDM-ASSETS
+          predicates:
+            - Path=/mdm/objects/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://mff-discovery-dev.apps.ocp4dev.muf.co.id/eureka
